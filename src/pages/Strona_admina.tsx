@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const Dodanie_mechanika: React.FC = () => {
+const Strona_admina: React.FC = () => {
     return (
         <div>
             <h2>Dodanie_zgłoszenia</h2>
@@ -10,4 +10,4 @@ const Dodanie_mechanika: React.FC = () => {
 
 };
 
-export default Dodanie_mechanika;
+export default Strona_admina;
