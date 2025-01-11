@@ -10,4 +10,5 @@ const Dodanie_zgłoszenia: React.FC = () => {
 
 };
 
+
 export default Dodanie_zgłoszenia;
