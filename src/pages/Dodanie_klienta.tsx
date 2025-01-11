@@ -1,29 +1,43 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 //import {useApi} from "../../composables/useApi";
-//import {Client, Mechanic} from '../../models/models';
+//import { Client } from '../../models/models';
 
-const Dodanie_mechanika: React.FC = () => {
-    // const { sendMechanic, postRequestError, successMessage } = useApi();
-    // const [mechanic, setMechanic] = useState<Mechanic>({
+const Dodanie_klienta: React.FC = () => {
+    // const { sendClient, postRequestError, successMessage } = useApi();
+    // const [client, setClient] = useState<Client>({
     //     id: 0,
     //     firstName: '',
     //     secondName: '',
-    //     ifEmployed: false,
-    //     username: '',
-    //     password: '',
+    //     phoneNumber: '',
+    //     email: '',
     // });
+    //
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    //
+    // useEffect(() => {
+    //     // Check if the user is logged in by looking for a token in localStorage
+    //     const token = localStorage.getItem('token');
+    //     setIsLoggedIn(!!token); // Convert token existence to a boolean
+    // }, []);
+    //
+    // const handleLogout = () => {
+    //     localStorage.removeItem('token');
+    //     localStorage.removeItem('roles');
+    //     setIsLoggedIn(false); // Update state to reflect logout
+    //     window.location.href = '/'; // Redirect to the login page
+    // };
     //
     // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //     const { id, value } = e.target;
-    //     setMechanic((prevMechanic) => ({
-    //         ...prevMechanic,
+    //     setClient((prevClient) => ({
+    //         ...prevClient,
     //         [id]: value,
     //     }));
     // };
     //
     // const handleSubmit = async (e: React.FormEvent) => {
     //     e.preventDefault();
-    //     await sendMechanic(mechanic);
+    //     await sendClient(client);
     // };
 
     return (
@@ -44,17 +58,17 @@ const Dodanie_mechanika: React.FC = () => {
                 </ul>
             </nav>
             <div className="formularz">
-                <h2>Dodanie mechanika</h2>
+                <h2>Dodanie klienta</h2>
                 {/*<form onSubmit={handleSubmit}>*/}
-                {/*    <h3>Dane mechanika:</h3>*/}
+                {/*    <h3>Dane klienta:</h3>*/}
                 {/*    <label htmlFor="firstName">Imię:</label>*/}
-                {/*    <input type="text" id="firstName" value={mechanic.firstName} onChange={handleChange}/>*/}
+                {/*    <input type="text" id="firstName" value={client.firstName} onChange={handleChange}/>*/}
                 {/*    <label htmlFor="secondName">Nazwisko:</label>*/}
-                {/*    <input type="text" id="secondName" value={mechanic.secondName} onChange={handleChange}/>*/}
-                {/*    <label htmlFor="login">Username:</label>*/}
-                {/*    <input type="text" id="username" value={mechanic.username} onChange={handleChange}/>*/}
-                {/*    <label htmlFor="password">Hasło:</label>*/}
-                {/*    <input type="password" id="password" value={mechanic.password} onChange={handleChange}/>*/}
+                {/*    <input type="text" id="secondName" value={client.secondName} onChange={handleChange}/>*/}
+                {/*    <label htmlFor="phoneNumber">Numer telefonu:</label>*/}
+                {/*    <input type="text" id="phoneNumber" value={client.phoneNumber} onChange={handleChange}/>*/}
+                {/*    <label htmlFor="email">Email:</label>*/}
+                {/*    <input type="text" id="email" value={client.email} onChange={handleChange}/>*/}
                 {/*    <button type="submit">Add Client</button>*/}
                 {/*</form>*/}
                 {/*{successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}*/}
@@ -63,7 +77,7 @@ const Dodanie_mechanika: React.FC = () => {
                 {/*)}*/}
             </div>
         </>
-    )
+    );
 };
 
-export default Dodanie_mechanika;
+export default Dodanie_klienta;

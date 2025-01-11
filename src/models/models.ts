@@ -10,7 +10,7 @@ export interface Klient {
 }
 
 export interface Pojazd {
-    pojazdID: string;
+    //pojazdID: string;
     rejestracja: string;
     marka: string;
     model: string;
@@ -22,25 +22,27 @@ export interface Mechanik {
     mechanikID: number;
     imie: string;
     nazwisko: string;
-    czyZatrudniony: string;
+    czyZatrudniony: boolean;
     login: string;
     haslo: string;
 }
 
 export interface Naprawa {
     naprawaID: number;
-    data_rozpoczecia: Date;
-    data_zakonczenia: Date;
+    mechanik: Mechanik;
+    pojazd: Pojazd;
+    data_rozpoczecia: string;
+    data_zakonczenia: string;
     stan: string;
     opis_usterki: string;
     protokol_naprawy: string;
     telefon_klienta: string;
 }
 
-export interface NaprawaDto {
-    mechanik: Mechanik;
-    naprawaID: number;
-}
+// export interface NaprawaDto {
+//     mechanik: Mechanik;
+//     naprawaID: number;
+// }
 
 export interface PojazdKlientDto {
     pojazd: Pojazd;
@@ -52,3 +54,22 @@ export interface ZgloszenieDto {
     pojazd: Pojazd;
 
 }
+
+export interface LoginRequest {
+    username: string;
+    password: string
+}
+
+export const formatDate = (dateString: string | null | undefined): string => {
+    if (!dateString) {
+        return ""; // Return an empty string if the input is null or undefined
+    }
+    return dateString.slice(0, 10); // Extract YYYY-MM-DD
+};
+
+export const formatUsername = (mechanik: Mechanik | null | undefined): string => {
+    if (!mechanik) {
+        return ""; // Return an empty string if the input is null or undefined
+    }
+    return mechanik.login; // Extract YYYY-MM-DD
+};
