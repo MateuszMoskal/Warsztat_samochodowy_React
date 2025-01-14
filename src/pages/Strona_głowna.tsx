@@ -1,4 +1,5 @@
 import React from "react";
+import {Menu} from "../components/Menu";
 
 
 const Strona_głowna: React.FC = () => {
@@ -6,14 +7,7 @@ const Strona_głowna: React.FC = () => {
 
     return (
         <>
-            <nav className="menu">
-                <ul>
-                    <li><a href="/">Strona główna</a></li>
-                    <li><a href="/Dodanie_zgłoszenia">Dodaj zgłoszenie</a></li>
-                    <li><a href="/Strona_mechanika">Strona mechanika</a></li>
-                    {/*<li><a href="/Login">Zaloguj</a></li>*/}
-                </ul>
-            </nav>
+            <Menu></Menu>
             <div className="main">
                 <h2>Strona Główna</h2>
                 <h2>Warsztat samochodowy. Zapraszamy!</h2>

@@ -2,12 +2,11 @@ import axios from '../services/axiosConfig';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-//import {CarClientDto, Client, Mechanic, RepairMechanicDto, TicketDto} from '../models/models';
-import {Klient, Mechanik} from '../models/models';
+import {Klient, Mechanik, NaprawaDto, PojazdKlientDto, ZgloszenieDto} from '../models/models';
 
 let ticket = {} as Klient;
-// let ticket2 = {} as TicketDto
-// let ticket3 = {} as RepairMechanicDto
+let ticket2 = {} as ZgloszenieDto
+let ticket3 = {} as NaprawaDto
 
 export const useApi = () => {
     const navigate = useNavigate();
@@ -20,9 +19,9 @@ export const useApi = () => {
             console.log('Client added successfully:', response.data);
             ticket = response.data;
             setPostRequestError(false);
-            setSuccessMessage("Client added successfully");
+            setSuccessMessage("Klient został dodany");
         } catch (error) {
-            console.error('Error adding client:', error);
+            console.error('Blad przy dodawaniu klienta:', error);
             if (error) setPostRequestError(true);
             else setPostRequestError(false);
         }
@@ -34,62 +33,64 @@ export const useApi = () => {
             console.log('Mechanic added successfully:', response.data);
             ticket = response.data;
             setPostRequestError(false);
-            setSuccessMessage("Mechanic added successfully");
+            setSuccessMessage("Mechanik został dodany");
         } catch (error) {
-            console.error('Error adding mechanic:', error);
+            console.error('Blad przy dodawaniu mechanika:', error);
             if (error) setPostRequestError(true);
             else setPostRequestError(false);
         }
     };
 
-    // const sendCarClientDto = async (carClientDto: CarClientDto) => {
-    //     try {
-    //         const response = await axios.post('/add/car', carClientDto);
-    //         console.log('Car added successfully:', response.data);
-    //         ticket = response.data;
-    //         setPostRequestError(false);
-    //         setSuccessMessage("Car added successfully");
-    //     } catch (error) {
-    //         console.error('Error adding car:', error);
-    //         if (error) setPostRequestError(true);
-    //         else setPostRequestError(false);
-    //     }
-    // };
-    //
-    // const sendTicketDto = async (newTicket: TicketDto) => {
-    //     try {
-    //         const response = await axios.post('/add/new/ticket', newTicket);
-    //         console.log('Ticket added successfully:', response.data);
-    //         ticket2 = response.data;
-    //         setPostRequestError(false);
-    //         //navigate('/ticket');
-    //     } catch (error) {
-    //         console.error('Error adding client:', error);
-    //         if (error) setPostRequestError(true);
-    //         else setPostRequestError(false);
-    //     }
-    // };
-    //
-    // const sendAcceptRepair = async (newTicket: RepairMechanicDto) => {
-    //     try {
-    //         const response = await axios.patch('/accept/repair', newTicket);
-    //         console.log('Repair accepted successfully:', response.data);
-    //         ticket3 = response.data;
-    //         setPostRequestError(false);
-    //         //navigate('/ticket');
-    //     } catch (error) {
-    //         console.error('Error adding client:', error);
-    //         if (error) setPostRequestError(true);
-    //         else setPostRequestError(false);
-    //     }
-    // };
+    const sendPojazdKlientDto = async (carClientDto: PojazdKlientDto) => {
+        try {
+            const response = await axios.post('/dodaj/pojazdy', carClientDto);
+            console.log('Car added successfully:', response.data);
+            ticket = response.data;
+            setPostRequestError(false);
+            setSuccessMessage("Pojazd został dodany");
+        } catch (error) {
+            console.error('Blad przy dodawaniu pojazdu:', error);
+            if (error) setPostRequestError(true);
+            else setPostRequestError(false);
+        }
+    };
+
+    const sendZgloszenieDto = async (newTicket: ZgloszenieDto) => {
+        try {
+            const response = await axios.post('/dodaj/nowe/zgloszenie', newTicket);
+            console.log('Ticket added successfully:', response.data);
+            ticket2 = response.data;
+            setPostRequestError(false);
+            setSuccessMessage("Zgloszenie zostalo dodane");
+            //navigate('/ticket');
+        } catch (error) {
+            console.error('Blad przy dodaniu zgloszenia:', error);
+            if (error) setPostRequestError(true);
+            else setPostRequestError(false);
+        }
+    };
+
+    const sendPrzyjecieNaprawy = async (newTicket: NaprawaDto) => {
+        try {
+            const response = await axios.patch('/przyjecie/naprawy', newTicket);
+            console.log('Repair accepted successfully:', response.data);
+            ticket3 = response.data;
+            setPostRequestError(false);
+            setSuccessMessage("Naprawa zostala przyjeta");
+            //navigate('/ticket');
+        } catch (error) {
+            console.error('Naprawa nie została przyjeta:', error);
+            if (error) setPostRequestError(true);
+            else setPostRequestError(false);
+        }
+    };
 
     return {
         sendKlient,
-        // sendTicketDto,
-        // sendAcceptRepair,
+        sendZgloszenieDto,
+        sendPrzyjecieNaprawy,
         sendMechanik,
-        // sendCarClientDto,
+        sendPojazdKlientDto,
         postRequestError,
         successMessage
     };

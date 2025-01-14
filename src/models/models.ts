@@ -22,7 +22,7 @@ export interface Mechanik {
     mechanikID: number;
     imie: string;
     nazwisko: string;
-    czyZatrudniony: boolean;
+    czyZatrudniony: string;
     login: string;
     haslo: string;
 }
@@ -39,14 +39,14 @@ export interface Naprawa {
     telefon_klienta: string;
 }
 
-// export interface NaprawaDto {
-//     mechanik: Mechanik;
-//     naprawaID: number;
-// }
+export interface NaprawaDto {
+    mechanikLogin: string;
+    naprawaID: number;
+}
 
 export interface PojazdKlientDto {
     pojazd: Pojazd;
-    telefon_klienta: string;
+    telefonKlienta: string;
 }
 
 export interface ZgloszenieDto {
@@ -56,8 +56,8 @@ export interface ZgloszenieDto {
 }
 
 export interface LoginRequest {
-    username: string;
-    password: string
+    login: string;
+    haslo: string;
 }
 
 export const formatDate = (dateString: string | null | undefined): string => {
