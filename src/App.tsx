@@ -13,6 +13,9 @@ import Lista_napraw from "./pages/Lista_napraw";
 import Przyjęcie_naprawy from "./pages/Przyjęcie_naprawy";
 import Strona_mechanika from "./pages/Strona_mechanika";
 import Strona_admina from "./pages/Strona_admina";
+import PrivateRoute from "./components/PrivateRoute";
+import Unauthorized from "./pages/Unauthorized";
+import LoginPage from "./pages/LoginPage";
 
 
 const App: React.FC = () => {
@@ -23,60 +26,58 @@ const App: React.FC = () => {
                     <Route path="/" element={<Strona_glowna />}/>
                     <Route path="/Dodanie_zgłoszenia" element={<Dodanie_zgłoszenia />}/>
                     <Route path="/Dodanie_mechanika" element={
-                        //<PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
+                        <PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
                             <Dodanie_mechanika />
-                        //</PrivateRoute>
+                        </PrivateRoute>
 
                     }/>
                     <Route path="/Dodanie_pojazdu" element={
-                        //<PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
+                        <PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
                             <Dodanie_pojazdu />
-                        //</PrivateRoute>
+                        </PrivateRoute>
                     }/>
                     <Route path="/Dodanie_klienta" element={
-                        //<PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
+                        <PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
                             <Dodanie_klienta />
-                        //</PrivateRoute>
+                        </PrivateRoute>
                     }/>
                     <Route path="/Lista_klientów" element={
-                        //<PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
+                        <PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
                             <Lista_klientów />
-                        //</PrivateRoute>
+                        </PrivateRoute>
                     }/>
                     <Route path="/Lista_pojazdów" element={
-                        //<PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
+                        <PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
                             <Lista_pojazdów />
-                        //</PrivateRoute>
+                        </PrivateRoute>
                     }/>
                     <Route path="/Lista_mechaników" element={
-                        //<PrivateRoute allowedRoles={['ROLE_ADMIN']}>
+                        <PrivateRoute allowedRoles={['ROLE_ADMIN']}>
                             <Lista_mechaników />
-                        //</PrivateRoute>
+                        </PrivateRoute>
                     }/>
                     <Route path="/Lista_napraw" element={
-                        //<PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
+                        <PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
                             <Lista_napraw />
-                        //</PrivateRoute>
+                        </PrivateRoute>
                     }/>
                     <Route path="/Przyjęcie_naprawy" element={
-                        //<PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
+                        <PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
                             <Przyjęcie_naprawy />
-                        //</PrivateRoute>
+                        </PrivateRoute>
                     }/>
                     <Route path="/Strona_mechanika" element={
-                        //<PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
+                        <PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MECHANIC']}>
                             <Strona_mechanika />
-                        //</PrivateRoute>
+                        </PrivateRoute>
                     }/>
                     <Route path="/Strona_admina" element={
-                        //<PrivateRoute allowedRoles={['ROLE_ADMIN']}>
+                        <PrivateRoute allowedRoles={['ROLE_ADMIN']}>
                             <Strona_admina />
-                        //</PrivateRoute>
+                        </PrivateRoute>
                     }/>
-                    {/*<Route path="/unauthorized" element={<Unauthorized />}/>*/}
-                    {/*<Route path="/login" element={<LoginPage />}/>*/}
-                    {/*<Route path="/Kontakt" element={<AddTicket/>}/>*/}
-                    {/*<Route path="/Zaloguj" element={<AddTicket/>}/>*/}
+                    <Route path="/unauthorized" element={<Unauthorized />}/>
+                    <Route path="/login" element={<LoginPage />}/>
                 </Routes>
             </div>
         </div>

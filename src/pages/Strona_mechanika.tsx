@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Menu} from "../components/Menu";
 
 const Strona_mechanika: React.FC = () => {
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,17 +19,7 @@ const Strona_mechanika: React.FC = () => {
 
     return (
         <>
-            <nav className="menu">
-                <ul>
-                    <li><a href="/">Strona główna</a></li>
-                    <li><a href="/Dodanie_zgłoszenia">Dodaj zgłoszenie</a></li>
-                    <li><a href="/Lista_napraw">Naprawy</a></li>
-                    <li><a href="/Przyjęcie_naprawy">Przyjmij naprawę</a></li>
-                    <li><a href="/Lista_klientów">Klienci</a></li>
-                    <li><a href="/Lista_pojazdów">Pojazdy</a></li>
-                    {/*<li><a href="/" onClick={handleLogout}>Wyloguj</a></li>*/}
-                </ul>
-            </nav>
+            <Menu></Menu>
             <div className="main">
                 <h2>Strona Mechanika</h2>
             </div>
