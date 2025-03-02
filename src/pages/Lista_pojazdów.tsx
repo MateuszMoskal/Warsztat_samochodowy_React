@@ -8,7 +8,9 @@ const Lista_pojazdów: React.FC = () => {
     const [editedPojazd, setEditedPojazd] = useState<Partial<Pojazd>>({});
     const [getRequestError, setGetRequestError] = useState(false);
     const [listOfCars, setListOfCars] = useState<Pojazd[]>([]); // React state for the client list
-
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 2;
 
     const getCars = async () => {
         try {
@@ -69,6 +71,15 @@ const Lista_pojazdów: React.FC = () => {
         setEditedPojazd({});
     };
 
+    const filteredCars = searchTerm
+        ? listOfCars.filter(pojazd => pojazd.vin.includes(searchTerm))
+        : listOfCars;
+
+    const indexOfLastCar = currentPage * itemsPerPage;
+    const indexOfFirstCar = indexOfLastCar - itemsPerPage;
+    const currentCar = filteredCars.slice(indexOfFirstCar, indexOfLastCar);
+    const totalPages = Math.ceil(filteredCars.length / itemsPerPage);
+
     return (
         <>
             <Menu></Menu>
@@ -89,7 +100,8 @@ const Lista_pojazdów: React.FC = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {listOfCars.map((pojazd) => (
+                        {currentCar.length > 0 ? (
+                        currentCar.map((pojazd) => (
                             <tr key={pojazd.vin}>
                                 {editingPojazdVin === pojazd.vin ? (
                                     <>
@@ -102,6 +114,7 @@ const Lista_pojazdów: React.FC = () => {
                                                 onChange={handleInputChange}
                                             />
                                         </td>
+                                        
                                         <td>
                                             <input
                                                 type="text"
@@ -147,9 +160,36 @@ const Lista_pojazdów: React.FC = () => {
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        ))
+                        ) :(
+                            <tr>
+                                <td>
+                                    Brak danych
+                                </td>
+                            </tr>
+                        )}
                         </tbody>
+
                     </table>
+                )}
+                {filteredCars.length > 0 && (
+                    <div>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Poprzednia
+                        </button>
+
+                        <span> Strona {currentPage} z {totalPages} </span>
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            Następna
+                        </button>
+                    </div>
                 )}
             </div>
         </>

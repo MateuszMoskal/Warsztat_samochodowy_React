@@ -162,8 +162,8 @@ tr:hover {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.lista_napraw{
-  max-width: 1000px;
+#lista_napraw{
+  max-width: 90%;
   margin: 50px auto;
   background: #fff;
   padding: 20px;
@@ -227,5 +227,9 @@ tr:hover {
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
+}
+
+#modify {
+  width: 100%;
 }
 
