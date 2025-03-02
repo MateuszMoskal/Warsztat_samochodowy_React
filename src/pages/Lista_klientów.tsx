@@ -11,6 +11,9 @@ const Lista_klientów: React.FC = () => {
     const [editedClient, setEditedClient] = useState<Partial<Klient>>({});
     const [getRequestError, setGetRequestError] = useState(false);
     const [listOfClients, setListOfClients] = useState<Klient[]>([]); // React state for the client list
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 2;
 
     const getClients = async () => {
         try {
@@ -70,30 +73,41 @@ const Lista_klientów: React.FC = () => {
         setEditedClient({});
     };
 
+    const filteredClients = searchTerm
+        ? listOfClients.filter(client => client.telefon.includes(searchTerm))
+        : listOfClients;
+
+    const indexOfLastClient = currentPage * itemsPerPage;
+    const indexOfFirstClient = indexOfLastClient - itemsPerPage;
+    const currentClients = filteredClients.slice(indexOfFirstClient, indexOfLastClient);
+    const totalPages = Math.ceil(filteredClients.length / itemsPerPage);
+
 
     return (
         <>
             <Menu></Menu>
             <div className="lista_klientów" id="lista_klientów">
                 <h2>Klienci:</h2>
+
                 {getRequestError ? (
                     <p>Failed to fetch clients. Please try again later.</p>
-                ) : (
+                    ) : (
                     <table id="tabela_klientów">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Imie</th>
-                            <th>Nazwisko</th>
-                            <th>Telefon</th>
-                            <th>Email</th>
-                            <th>Modyfikuj</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {listOfClients.map((client) => (
-                            <tr key={client.telefon}>
-                                {editingClientPhoneNumber === client.telefon ? (
+                    <thead>
+                    <tr>
+                    <th>ID</th>
+                    <th>Imie</th>
+                    <th>Nazwisko</th>
+                    <th>Telefon</th>
+                    <th>Email</th>
+                    <th>Modyfikuj</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                {currentClients.length > 0 ? (
+                    currentClients.map((client) => (
+                    <tr key={client.telefon}>
+                {editingClientPhoneNumber === client.telefon ? (
                                     <>
                                         <td>{client.klientID}</td>
                                         <td>
@@ -141,11 +155,39 @@ const Lista_klientów: React.FC = () => {
                                     </>
                                 )}
                             </tr>
-                        ))}
+
+                        ))
+                            ) :(
+                                <tr>
+                                <td>
+                                  Brak danych
+                                </td>
+                                </tr>
+                            )}
                         </tbody>
 
                     </table>
                 )}
+                {filteredClients.length > 0 && (
+                    <div>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Poprzednia
+                        </button>
+
+                        <span> Strona {currentPage} z {totalPages} </span>
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            Następna
+                        </button>
+                    </div>
+                )}
+
             </div>
         </>
     );

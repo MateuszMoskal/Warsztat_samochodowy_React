@@ -3,6 +3,7 @@ import axios from '../services/axiosConfig'; // Use Axios instance configured fo
 import { useNavigate } from 'react-router-dom';
 import {LoginRequest} from "../models/models";
 import {useApi} from "../composables/useApi";
+import {Menu} from "../components/Menu";
 // import {Menu} from "../components/Menu";
 
 const LoginForm: React.FC = () => {
@@ -51,7 +52,7 @@ const LoginForm: React.FC = () => {
 
     return (
         <>
-            {/*<Menu></Menu>*/}
+            <Menu></Menu>
             <div className="formularz">
                 <h2>Zaloguj się jako mechanik warsztatu</h2>
                 <form onSubmit={handleSubmit}>
