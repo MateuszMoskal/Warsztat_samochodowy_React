@@ -96,8 +96,14 @@ const Lista_mechaników: React.FC = () => {
         setEditedMechanik({});
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value.toLowerCase());
+        setCurrentPage(1);
+    };
+
     const filteredMechanics = searchTerm
-        ? listOfMechanics.filter(mechanik => mechanik.login.includes(searchTerm))
+        ? listOfMechanics.filter(mechanik =>
+            mechanik.login.toLowerCase().startsWith(searchTerm))
         : listOfMechanics;
 
     const indexOfLastMechanik = currentPage * itemsPerPage;
@@ -111,6 +117,13 @@ const Lista_mechaników: React.FC = () => {
             <Menu></Menu>
             <div className="lista_mechaników" id="lista_mechaników">
                 <h2>Mechanicy:</h2>
+
+                <input
+                    type="text"
+                    placeholder="wyszukiwanie po loginie mechanika"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
                 {getRequestError ? (
                     <p>Failed to fetch mechanics. Please try again later.</p>
                 ) : (
@@ -127,35 +140,36 @@ const Lista_mechaników: React.FC = () => {
                         </thead>
                         <tbody>
                         {currentMechanik.length > 0 ? (
-                        currentMechanik.map((mechanik) => (
-                            <tr key={mechanik.login}>
-                                {editingMechanikUsername === mechanik.login ? (
-                                    <>
-                                        <td>{mechanik.mechanikID}</td>
-                                        <td>{mechanik.imie}</td>
-                                        <td>{mechanik.nazwisko}</td>
-                                        <td>{mechanik.login}</td>
-                                        <td>{mechanik.czyZatrudniony}</td>
-                                        <td>
-                                            <button onClick={handleSaveClick}>Potwierdź</button>
-                                            <button onClick={handleCancelClick}>Anuluj</button>
-                                        </td>
-                                    </>
-                                ) : (
-                                    <>
-                                        <td>{mechanik.mechanikID}</td>
-                                        <td>{mechanik.imie}</td>
-                                        <td>{mechanik.nazwisko}</td>
-                                        <td>{mechanik.login}</td>
-                                        <td>{mechanik.czyZatrudniony}</td>
-                                        <td>
-                                            <button id="modify" onClick={() => handleEditClick(mechanik)}>{mechanik.czyZatrudniony === 'TAK' ? 'Zwolnij' : 'Zatrudnij'} {/* Show Zwolnij if employed, Zatrudnij if not */}</button>
-                                        </td>
-                                    </>
-                                )}
-                            </tr>
-                        ))
-                        ) :(
+                            currentMechanik.map((mechanik) => (
+                                <tr key={mechanik.login}>
+                                    {editingMechanikUsername === mechanik.login ? (
+                                        <>
+                                            <td>{mechanik.mechanikID}</td>
+                                            <td>{mechanik.imie}</td>
+                                            <td>{mechanik.nazwisko}</td>
+                                            <td>{mechanik.login}</td>
+                                            <td>{mechanik.czyZatrudniony}</td>
+                                            <td>
+                                                <button onClick={handleSaveClick}>Potwierdź</button>
+                                                <button onClick={handleCancelClick}>Anuluj</button>
+                                            </td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>{mechanik.mechanikID}</td>
+                                            <td>{mechanik.imie}</td>
+                                            <td>{mechanik.nazwisko}</td>
+                                            <td>{mechanik.login}</td>
+                                            <td>{mechanik.czyZatrudniony}</td>
+                                            <td>
+                                                <button id="modify"
+                                                        onClick={() => handleEditClick(mechanik)}>{mechanik.czyZatrudniony === 'TAK' ? 'Zwolnij' : 'Zatrudnij'} {/* Show Zwolnij if employed, Zatrudnij if not */}</button>
+                                            </td>
+                                        </>
+                                    )}
+                                </tr>
+                            ))
+                        ) : (
                             <tr>
                                 <td>
                                     Brak danych

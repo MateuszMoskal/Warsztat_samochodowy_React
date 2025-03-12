@@ -9,6 +9,7 @@ const Lista_pojazdów: React.FC = () => {
     const [getRequestError, setGetRequestError] = useState(false);
     const [listOfCars, setListOfCars] = useState<Pojazd[]>([]); // React state for the client list
     const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm2, setSearchTerm2] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 2;
 
@@ -71,9 +72,27 @@ const Lista_pojazdów: React.FC = () => {
         setEditedPojazd({});
     };
 
-    const filteredCars = searchTerm
-        ? listOfCars.filter(pojazd => pojazd.vin.includes(searchTerm))
-        : listOfCars;
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value.toLowerCase());
+        setCurrentPage(1);
+    };
+
+    const handleSearchChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm2(e.target.value.toLowerCase());
+        setCurrentPage(1);
+    };
+
+    // const filteredCars = searchTerm
+    //     ? listOfCars.filter(pojazd =>
+    //         pojazd.vin.toLowerCase().startsWith(searchTerm)) &&
+    //         pojazd.rejestracja.toLowerCase().startsWith(searchTerm2)
+    //     : listOfCars;
+
+    const filteredCars = listOfCars.filter(pojazd => {
+        const a = pojazd.vin.toLowerCase().startsWith(searchTerm);
+        const b =  pojazd.rejestracja.toLowerCase().startsWith(searchTerm2);
+        return a && b;
+    })
 
     const indexOfLastCar = currentPage * itemsPerPage;
     const indexOfFirstCar = indexOfLastCar - itemsPerPage;
@@ -85,6 +104,21 @@ const Lista_pojazdów: React.FC = () => {
             <Menu></Menu>
             <div className="lista_pojazdów" id="lista_pojazdów">
                 <h2>Pojazdy:</h2>
+
+                <input
+                    type="text"
+                    placeholder="wyszukiwanie po Vin pojazdu"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+
+                <input
+                    type="text"
+                    placeholder="wyszukiwanie po rejestracji"
+                    value={searchTerm2}
+                    onChange={handleSearchChange2}
+                />
+
                 {getRequestError ? (
                     <p>Failed to fetch cars. Please try again later.</p>
                 ) : (
@@ -101,67 +135,67 @@ const Lista_pojazdów: React.FC = () => {
                         </thead>
                         <tbody>
                         {currentCar.length > 0 ? (
-                        currentCar.map((pojazd) => (
-                            <tr key={pojazd.vin}>
-                                {editingPojazdVin === pojazd.vin ? (
-                                    <>
-                                        <td>{pojazd.vin}</td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="rejestracja"
-                                                value={editedPojazd.rejestracja || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="marka"
-                                                value={editedPojazd.marka || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
+                            currentCar.map((pojazd) => (
+                                <tr key={pojazd.vin}>
+                                    {editingPojazdVin === pojazd.vin ? (
+                                        <>
+                                            <td>{pojazd.vin}</td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="rejestracja"
+                                                    value={editedPojazd.rejestracja || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
 
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="model"
-                                                value={editedPojazd.model || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="marka"
+                                                    value={editedPojazd.marka || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
 
-                                        <td>
-                                            <input
-                                                type="number"
-                                                name="rocznik"
-                                                value={editedPojazd.rocznik || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <button onClick={handleSaveClick}>Zapisz</button>
-                                            <button onClick={handleCancelClick}>Anuluj</button>
-                                        </td>
-                                    </>
-                                ) : (
-                                    <>
-                                        <td>{pojazd.vin}</td>
-                                        <td>{pojazd.rejestracja}</td>
-                                        <td>{pojazd.marka}</td>
-                                        <td>{pojazd.model}</td>
-                                        <td>{Number (pojazd.rocznik)}</td>
-                                        <td>
-                                            <button id="modify" onClick={() => handleEditClick(pojazd)}>Modyfikuj
-                                            </button>
-                                        </td>
-                                    </>
-                                )}
-                            </tr>
-                        ))
-                        ) :(
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="model"
+                                                    value={editedPojazd.model || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+
+                                            <td>
+                                                <input
+                                                    type="number"
+                                                    name="rocznik"
+                                                    value={editedPojazd.rocznik || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <button onClick={handleSaveClick}>Zapisz</button>
+                                                <button onClick={handleCancelClick}>Anuluj</button>
+                                            </td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>{pojazd.vin}</td>
+                                            <td>{pojazd.rejestracja}</td>
+                                            <td>{pojazd.marka}</td>
+                                            <td>{pojazd.model}</td>
+                                            <td>{Number(pojazd.rocznik)}</td>
+                                            <td>
+                                                <button id="modify" onClick={() => handleEditClick(pojazd)}>Modyfikuj
+                                                </button>
+                                            </td>
+                                        </>
+                                    )}
+                                </tr>
+                            ))
+                        ) : (
                             <tr>
                                 <td>
                                     Brak danych

@@ -5,7 +5,7 @@ import axios from "../services/axiosConfig";
 import {Menu} from "../components/Menu";
 
 const Lista_napraw: React.FC = () => {
-    const [editingNaprawaID, setEditingNaprawaID] = useState<string | null>(null);
+    const [editingNaprawaID, setEditingNaprawaID] = useState<number | null>(null);
     const [editedNaprawa, setEditedNaprawa] = useState<Partial<Naprawa>>({});
     const [getRequestError, setGetRequestError] = useState(false);
     const [listOfRepairs, setListOfRepairs] = useState<Naprawa[]>([]); // React state for the client list
@@ -33,7 +33,7 @@ const Lista_napraw: React.FC = () => {
             setListOfRepairs((prevRepairs) => {
                 // console.log('Previous repairs:', prevRepairs);
                 // console.log('New repairs:', response.data);
-                return response.data;
+                return response.data.sort((a: Naprawa, b: Naprawa)=> a.naprawaID - b.naprawaID);
             });
             setGetRequestError(false);
             // console.log("WORKING");
@@ -87,8 +87,14 @@ const Lista_napraw: React.FC = () => {
         setEditedNaprawa({});
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value.toLowerCase());
+        setCurrentPage(1);
+    };
+
     const filteredNaprawy = searchTerm
-        ? listOfRepairs.filter(naprawa => naprawa.naprawaID.includes(searchTerm))
+        ? listOfRepairs.filter(naprawa =>
+            String(naprawa.pojazd.vin).toLowerCase().startsWith(searchTerm))
         : listOfRepairs;
 
     const indexOfLastRepair = currentPage * itemsPerPage;
@@ -101,6 +107,14 @@ const Lista_napraw: React.FC = () => {
             <Menu></Menu>
             <div className="lista_napraw" id="lista_napraw">
                 <h2>Naprawy:</h2>
+
+                <input
+                    type="text"
+                    placeholder="wyszukiwanie po Vin pojazdu"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+
                 {getRequestError ? (
                     <p>Failed to fetch repairs. Please try again later.</p>
                 ) : (
@@ -121,82 +135,82 @@ const Lista_napraw: React.FC = () => {
                         </thead>
                         <tbody>
                         {currentRepair.length > 0 ? (
-                        currentRepair.map((naprawa) => (
-                            <tr key={naprawa.naprawaID}>
-                                {editingNaprawaID === naprawa.naprawaID ? (
-                                    <>
-                                        <td>{naprawa.naprawaID}</td>
-                                        <td>{naprawa.telefon_klienta}</td>
-                                        <td>{formatUsername(naprawa.mechanik)}</td>
-                                        <td>{naprawa.pojazd.vin}</td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="protokol_naprawy"
-                                                value={editedNaprawa.protokol_naprawy || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="stan"
-                                                value={editedNaprawa.stan || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
+                            currentRepair.map((naprawa) => (
+                                <tr key={naprawa.naprawaID}>
+                                    {editingNaprawaID === naprawa.naprawaID ? (
+                                        <>
+                                            <td>{naprawa.naprawaID}</td>
+                                            <td>{naprawa.telefon_klienta}</td>
+                                            <td>{formatUsername(naprawa.mechanik)}</td>
+                                            <td>{naprawa.pojazd.vin}</td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="protokol_naprawy"
+                                                    value={editedNaprawa.protokol_naprawy || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="stan"
+                                                    value={editedNaprawa.stan || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
 
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="opis_usterki"
-                                                value={editedNaprawa.opis_usterki || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="opis_usterki"
+                                                    value={editedNaprawa.opis_usterki || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
 
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="data_rozpoczecia"
-                                                value={editedNaprawa.data_rozpoczecia || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="data_rozpoczecia"
+                                                    value={editedNaprawa.data_rozpoczecia || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
 
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="data_zakonczenia"
-                                                value={editedNaprawa.data_zakonczenia || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <button onClick={handleSaveClick}>Zapisz</button>
-                                            <button onClick={handleCancelClick}>Anuluj</button>
-                                        </td>
-                                    </>
-                                ) : (
-                                    <>
-                                        <td>{naprawa.naprawaID}</td>
-                                        <td>{naprawa.telefon_klienta}</td>
-                                        <td>{formatUsername(naprawa.mechanik)}</td>
-                                        <td>{naprawa.pojazd.vin}</td>
-                                        <td>{naprawa.protokol_naprawy}</td>
-                                        <td>{naprawa.stan}</td>
-                                        <td>{naprawa.opis_usterki}</td>
-                                        <td>{formatDate(naprawa.data_rozpoczecia)}</td>
-                                        <td>{formatDate(naprawa.data_zakonczenia)}</td>
-                                        <td>
-                                            <button id="modify" onClick={() => handleEditClick(naprawa)}>Modyfikuj
-                                            </button>
-                                        </td>
-                                    </>
-                                )}
-                            </tr>
-                        ))
-                        ) :(
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="data_zakonczenia"
+                                                    value={editedNaprawa.data_zakonczenia || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <button onClick={handleSaveClick}>Zapisz</button>
+                                                <button onClick={handleCancelClick}>Anuluj</button>
+                                            </td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>{naprawa.naprawaID}</td>
+                                            <td>{naprawa.telefon_klienta}</td>
+                                            <td>{formatUsername(naprawa.mechanik)}</td>
+                                            <td>{naprawa.pojazd.vin}</td>
+                                            <td>{naprawa.protokol_naprawy}</td>
+                                            <td>{naprawa.stan}</td>
+                                            <td>{naprawa.opis_usterki}</td>
+                                            <td>{formatDate(naprawa.data_rozpoczecia)}</td>
+                                            <td>{formatDate(naprawa.data_zakonczenia)}</td>
+                                            <td>
+                                                <button id="modify" onClick={() => handleEditClick(naprawa)}>Modyfikuj
+                                                </button>
+                                            </td>
+                                        </>
+                                    )}
+                                </tr>
+                            ))
+                        ) : (
                             <tr>
                                 <td>
                                     Brak danych
@@ -208,8 +222,8 @@ const Lista_napraw: React.FC = () => {
                     </table>
                 )}
                 {filteredNaprawy.length > 0 && (
-                    <div>
-                        <button
+                    <div className="button-container">
+                        <button className= "button-page"
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
                         >
@@ -218,7 +232,7 @@ const Lista_napraw: React.FC = () => {
 
                         <span> Strona {currentPage} z {totalPages} </span>
 
-                        <button
+                        <button className= "button-page"
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
                         >

@@ -73,8 +73,13 @@ const Lista_klientów: React.FC = () => {
         setEditedClient({});
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value.toLowerCase());
+        setCurrentPage(1);
+    };
+
     const filteredClients = searchTerm
-        ? listOfClients.filter(client => client.telefon.includes(searchTerm))
+        ? listOfClients.filter(client => client.telefon.startsWith(searchTerm))
         : listOfClients;
 
     const indexOfLastClient = currentPage * itemsPerPage;
@@ -83,87 +88,96 @@ const Lista_klientów: React.FC = () => {
     const totalPages = Math.ceil(filteredClients.length / itemsPerPage);
 
 
+
     return (
         <>
             <Menu></Menu>
             <div className="lista_klientów" id="lista_klientów">
                 <h2>Klienci:</h2>
 
+                <input
+                    type="text"
+                    placeholder="wyszukiwanie po numerze telefonu"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+
                 {getRequestError ? (
                     <p>Failed to fetch clients. Please try again later.</p>
-                    ) : (
+                ) : (
+
                     <table id="tabela_klientów">
-                    <thead>
-                    <tr>
-                    <th>ID</th>
-                    <th>Imie</th>
-                    <th>Nazwisko</th>
-                    <th>Telefon</th>
-                    <th>Email</th>
-                    <th>Modyfikuj</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                {currentClients.length > 0 ? (
-                    currentClients.map((client) => (
-                    <tr key={client.telefon}>
-                {editingClientPhoneNumber === client.telefon ? (
-                                    <>
-                                        <td>{client.klientID}</td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="firstName"
-                                                value={editedClient.imie || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="secondName"
-                                                value={editedClient.nazwisko || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>{client.telefon}</td>
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Imie</th>
+                            <th>Nazwisko</th>
+                            <th>Telefon</th>
+                            <th>Email</th>
+                            <th>Modyfikuj</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {currentClients.length > 0 ? (
+                            currentClients.map((client) => (
+                                <tr key={client.telefon}>
+                                    {editingClientPhoneNumber === client.telefon ? (
+                                        <>
+                                            <td>{client.klientID}</td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="firstName"
+                                                    value={editedClient.imie || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="secondName"
+                                                    value={editedClient.nazwisko || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>{client.telefon}</td>
 
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="email"
-                                                value={editedClient.email || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <button onClick={handleSaveClick}>Zapisz</button>
-                                            <button onClick={handleCancelClick}>Anuluj</button>
-                                        </td>
-                                    </>
-                                ) : (
-                                    <>
-                                        <td>{client.klientID}</td>
-                                        <td>{client.imie}</td>
-                                        <td>{client.nazwisko}</td>
-                                        <td>{client.telefon}</td>
-                                        <td>{client.email}</td>
-                                        <td>
-                                            <button id="modify" onClick={() => handleEditClick(client)}>Modyfikuj
-                                            </button>
-                                        </td>
-                                    </>
-                                )}
-                            </tr>
-
-                        ))
-                            ) :(
-                                <tr>
-                                <td>
-                                  Brak danych
-                                </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="email"
+                                                    value={editedClient.email || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <button onClick={handleSaveClick}>Zapisz</button>
+                                                <button onClick={handleCancelClick}>Anuluj</button>
+                                            </td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>{client.klientID}</td>
+                                            <td>{client.imie}</td>
+                                            <td>{client.nazwisko}</td>
+                                            <td>{client.telefon}</td>
+                                            <td>{client.email}</td>
+                                            <td>
+                                                <button id="modify" onClick={() => handleEditClick(client)}>Modyfikuj
+                                                </button>
+                                            </td>
+                                        </>
+                                    )}
                                 </tr>
-                            )}
+
+                            ))
+                        ) : (
+                            <tr>
+                                <td>
+                                    Brak danych
+                                </td>
+                            </tr>
+                        )}
                         </tbody>
 
                     </table>

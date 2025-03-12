@@ -28,7 +28,7 @@ export interface Mechanik {
 }
 
 export interface Naprawa {
-    naprawaID: string;
+    naprawaID: number;
     mechanik: Mechanik;
     pojazd: Pojazd;
     data_rozpoczecia: string;

@@ -233,3 +233,32 @@ tr:hover {
   width: 100%;
 }
 
+footer {
+  margin-top: 20px;
+  padding: 10px;
+  background: #0e5db1;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+}
+
+.button-container {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin: 10px auto;
+  /*align-items: center;*/
+}
+
+.button-page {
+  background-color: #4a9ff1;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
