@@ -13,6 +13,11 @@ const Strona_głowna: React.FC = () => {
                 <h2>Warsztat samochodowy. Zapraszamy!</h2>
                 <p>W zakładce Dodaj zgłoszenie możesz wysłać swoje zgłoszenie</p>
             </div>
+
+            <footer>
+                <p>Dane kontaktowe</p>
+                <p>Numer telefonu</p>
+            </footer>
         </>
 
 
