@@ -253,6 +253,7 @@ footer {
 
 .button-page {
   background-color: #4a9ff1;
+  width: 100px;
   color: white;
   border: none;
   padding: 5px 10px;
