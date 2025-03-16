@@ -207,22 +207,22 @@ const Lista_pojazdów: React.FC = () => {
                     </table>
                 )}
                 {filteredCars.length > 0 && (
-                    <div>
-                        <button
+                    <div className="button-container">
+                        <button className="button-page"
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
                         >
                             Poprzednia
                         </button>
 
-                        <span> Strona {currentPage} z {totalPages} </span>
-
-                        <button
+                        <button className="button-page"
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
                         >
                             Następna
                         </button>
+
+                        <span> Strona {currentPage} z {totalPages} </span>
                     </div>
                 )}
             </div>

@@ -223,21 +223,21 @@ const Lista_napraw: React.FC = () => {
                 )}
                 {filteredNaprawy.length > 0 && (
                     <div className="button-container">
-                        <button className= "button-page"
-                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
+                        <button className="button-page"
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
                         >
                             Poprzednia
                         </button>
 
-                        <span> Strona {currentPage} z {totalPages} </span>
-
-                        <button className= "button-page"
-                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
+                        <button className="button-page"
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
                         >
                             Następna
                         </button>
+
+                        <span> Strona {currentPage} z {totalPages} </span>
                     </div>
                 )}
             </div>

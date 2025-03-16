@@ -23,6 +23,10 @@ export const Menu: React.FC = () => {
     return (
         <nav className="menu">
             <ul>
+                <li>
+                    <a href="/"> <img src="/car.png" style={{width: "25px", height: "25px"}}/>
+                    </a>
+                </li>
                 <li><a href="/">Strona główna</a></li>
                 <li><a href="/Dodanie_zgłoszenia">Dodaj zgłoszenie</a></li>
                 {isLoggedIn && (role === 'ROLE_ADMIN' || role === 'ROLE_MECHANIC') && (
